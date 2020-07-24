@@ -85,9 +85,23 @@ const createMessage = async (req, res, next) => {
 };
 
 const modifyMessage = async (req, res, next) => {
+  const { content, currentUserID } = req.body;
+  const { messageID } = req.params;
+
+  const updatedMessage = {
+    ...DUMMY_MESSAGES.find((m) => m.messageID === messageID),
+  };
+  const messageIndex = DUMMY_MESSAGES.findIndex(
+    (m) => m.messageID === messageID
+  );
+  updatedMessage.content = content;
+  if (currentUserID) {
+    updatedMessage.currentUserID = currentUserID;
+  }
+  DUMMY_MESSAGES[messageIndex] = updatedMessage;
   res.json({
-    message:
-      "Updates a message based on body content, and userID. Returns updated message in response. Only admin's can update messages. ",
+    updatedMessage,
+    message: "Message updated",
   });
 };
 
