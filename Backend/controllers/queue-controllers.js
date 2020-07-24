@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Queue = require("../models/queue");
 
-const DUMMY_QUEUES = [
+let DUMMY_QUEUES = [
   { name: "queue1", queueID: "1" },
   { name: "queue2", queueID: "2" },
 ];
@@ -55,8 +55,11 @@ const modifyQueue = async (req, res, next) => {
 };
 
 const deleteQueue = async (req, res, next) => {
+  const { queueID } = req.params;
+  DUMMY_QUEUES = DUMMY_QUEUES.filter((q) => q.queueID !== queueID);
   res.json({
-    message: "Deletes a queue",
+    queues: DUMMY_QUEUES,
+    message: `Deleted the queue with id: ${queueID}`,
   });
 };
 
