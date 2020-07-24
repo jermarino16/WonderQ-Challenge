@@ -2,28 +2,39 @@ const mongoose = require("mongoose");
 
 const HttpError = require("../models/http-error");
 const Queue = require("../models/queue");
+const Message = require("../models/message");
+const User = require("../models/user");
 
-const getPlaceById = async (req, res, next) => {
-  const placeId = req.params.pid;
+const getQueues = async (req, res, next) => {
+  res.json({ message: "Return list of all queues" });
+};
 
-  let place;
-  try {
-    place = await Place.findById(placeId);
-  } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not find a place.",
-      500
-    );
-    return next(error);
-  }
+const getQueueByID = async (req, res, next) => {
+  res.json({ message: "Display a queue based on queueID" });
+};
 
-  if (!place) {
-    const error = new HttpError(
-      "Could not find place for the provided id.",
-      404
-    );
-    return next(error);
-  }
+const createQueue = async (req, res, next) => {
+  res.json({
+    message: "Creates a new Queue and returns that Queue information",
+  });
+};
 
-  res.json({ place: place.toObject({ getters: true }) });
+const modifyQueue = async (req, res, next) => {
+  res.json({
+    message: "Modifies a queue",
+  });
+};
+
+const deleteQueue = async (req, res, next) => {
+  res.json({
+    message: "Deletes a queue",
+  });
+};
+
+module.exports = {
+  getQueues,
+  getQueueByID,
+  createQueue,
+  modifyQueue,
+  deleteQueue,
 };

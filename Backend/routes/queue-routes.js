@@ -4,42 +4,28 @@ const queuesControllers = require("../controllers/queue-controllers");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.json({ message: "Return list of all available queues" });
-});
+router.get("/", queuesControllers.getQueues);
 
-router.get("/new", (req, res, next) => {
-  res.json({
-    message: "Show the create queue form",
-  });
-});
+// FRONT END TASK
+// router.get("/new", (req, res, next) => {
+//   res.json({
+//     message: "Show the create queue form",
+//   });
+// });
 
-router.get("/:queueID", (req, res, next) => {
-  res.json({ message: "Display a queue based on queueID" });
-});
+router.get("/:queueID", queuesControllers.getQueueByID);
 
-router.post("/:queueID", (req, res, next) => {
-  res.json({
-    message: "Creates a new Queue and returns that Queue information",
-  });
-});
+router.post("/:queueID", queuesControllers.createQueue);
 
-router.patch("/:queueID", (req, res, next) => {
-  res.json({
-    message: "Modifies a queue",
-  });
-});
+router.patch("/:queueID", queuesControllers.modifyQueue);
 
-router.delete("/:queueID", (req, res, next) => {
-  res.json({
-    message: "Deletes a queue",
-  });
-});
+router.delete("/:queueID", queuesControllers.deleteQueue);
 
-router.get("/:queueID/edit", (req, res, next) => {
-  res.json({
-    message: "Display edit form of Queue",
-  });
-});
+// FRONT END TASK
+// router.get("/:queueID/edit", (req, res, next) => {
+//   res.json({
+//     message: "Display edit form of Queue",
+//   });
+// });
 
 module.exports = router;
