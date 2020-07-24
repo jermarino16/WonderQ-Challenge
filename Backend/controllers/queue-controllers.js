@@ -14,7 +14,12 @@ const getQueueByID = async (req, res, next) => {
 };
 
 const createQueue = async (req, res, next) => {
+  const { name } = req.body;
+
+  const createdQueue = new Queue({ name });
+
   res.json({
+    createdQueue,
     message: "Creates a new Queue and returns that Queue information",
   });
 };
