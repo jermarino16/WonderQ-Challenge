@@ -117,17 +117,34 @@ const modifyMessage = async (req, res, next) => {
   const { content, currentUserID } = req.body;
   const { messageID } = req.params;
 
-  const updatedMessage = {
+  //search available messages for this
+  let arrayTracker = 0;
+  let updatedMessage = {
     ...DUMMY_AVAILABLE_MESSAGES.find((m) => m.messageID === messageID),
   };
-  const messageIndex = DUMMY_AVAILABLE_MESSAGES.findIndex(
+  let messageIndex = DUMMY_AVAILABLE_MESSAGES.findIndex(
     (m) => m.messageID === messageID
   );
+
+  if (!updatedMessage.length) {
+    updatedMessage = {
+      ...DUMMY_POLLED_MESSAGES.find((m) => m.messageID === messageID),
+    };
+    messageIndex = DUMMY_POLLED_MESSAGES.findIndex(
+      (m) => m.messageID === messageID
+    );
+    arrayTracker = 1;
+  }
   updatedMessage.content = content;
   if (currentUserID) {
     updatedMessage.currentUserID = currentUserID;
   }
+
+  if (arrayTracker === 1) {
+    DUMMY_POLLED_MESSAGES[messageIndex] = updatedMessage;
+  }
   DUMMY_AVAILABLE_MESSAGES[messageIndex] = updatedMessage;
+
   res.json({
     updatedMessage,
     message: "Message updated",
