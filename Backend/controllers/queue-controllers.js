@@ -1,36 +1,20 @@
 const mongoose = require("mongoose");
 
-const HttpError = require("../models/http-error");
 const Queue = require("../models/queue");
-const Message = require("../models/message");
-const User = require("../models/user");
+
+const DUMMY_QUEUES = [
+  { name: "queue1", queueID: "1" },
+  { name: "queue2", queueID: "2" },
+];
 
 const getQueues = async (req, res, next) => {
-  const name1 = "DUMMY DATA1";
-  const name2 = "DUMMY DATA2";
-
-  const queueList = [];
-  const dummy_queue1 = new Queue({ name1 });
-  const dummy_queue2 = new Queue({ name2 });
-  queueList.push(dummy_queue1);
-  queueList.push(dummy_queue2);
-
-  res.json({ queues: queueList, message: "Return list of all queues" });
+  res.json({ queues: DUMMY_QUEUES, message: "Return list of all queues" });
 };
 
 const getQueueByID = async (req, res, next) => {
   const { queueID } = req.params;
 
-  const name1 = "DUMMY DATA1";
-  const name2 = "DUMMY DATA2";
-
-  const queueList = [];
-  const dummy_queue1 = new Queue({ name1, queueID: "1" });
-  const dummy_queue2 = new Queue({ name2, queueID: "2" });
-  queueList.push(dummy_queue1);
-  queueList.push(dummy_queue2);
-
-  let queue = queueList.filter((q) => q.queueID === queueID);
+  let queue = DUMMY_QUEUES.filter((q) => q.queueID === queueID);
 
   if (!queue.length) {
     res.json({
@@ -56,14 +40,16 @@ const modifyQueue = async (req, res, next) => {
   const { name } = req.body;
   const { queueID } = req.params;
 
-  const name1 = "DUMMY DATA1";
+  const updatedQueue = {
+    ...DUMMY_QUEUES.find((q) => q.queueID === queueID),
+  };
+  const queueIndex = DUMMY_QUEUES.findIndex((q) => q.queueID === queueID);
+  updatedQueue.name = name;
 
-  let dummy_queue = new Queue({ name: name1, queueID: "1" });
-
-  dummy_queue.name = name;
+  DUMMY_QUEUES[queueIndex] = updatedQueue;
 
   res.json({
-    dummy_queue,
+    queue: updatedQueue,
     message: "Your queue has been modified",
   });
 };
