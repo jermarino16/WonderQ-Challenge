@@ -20,7 +20,7 @@ router.get(
 
 router.get(`${baseURL}/:messageID`, messageControllers.getMessageByMessageID);
 
-router.post(`${baseURL}/:messageID`, messageControllers.createMessage);
+router.post(`${baseURL}/`, messageControllers.createMessage);
 
 router.patch(`${baseURL}/:messageID`, messageControllers.modifyMessage);
 

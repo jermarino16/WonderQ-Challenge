@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Message = require("../models/message");
-const queue = require("../models/queue");
+const Queue = require("../models/queue");
 
 let DUMMY_MESSAGES = [
   {
