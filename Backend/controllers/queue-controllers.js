@@ -19,7 +19,26 @@ const getQueues = async (req, res, next) => {
 };
 
 const getQueueByID = async (req, res, next) => {
-  res.json({ message: "Display a queue based on queueID" });
+  const { queueID } = req.params;
+
+  const name1 = "DUMMY DATA1";
+  const name2 = "DUMMY DATA2";
+
+  const queueList = [];
+  const dummy_queue1 = new Queue({ name1, queueID: "1" });
+  const dummy_queue2 = new Queue({ name2, queueID: "2" });
+  queueList.push(dummy_queue1);
+  queueList.push(dummy_queue2);
+
+  let queue = queueList.filter((q) => q.queueID === queueID);
+
+  if (!queue.length) {
+    res.json({
+      message: "There is no queue with that associated ID",
+    });
+  }
+
+  res.json({ queue, message: "Here's your queue" });
 };
 
 const createQueue = async (req, res, next) => {
