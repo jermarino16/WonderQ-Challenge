@@ -1,12 +1,36 @@
 const mongoose = require("mongoose");
 
-const HttpError = require("../models/http-error");
-const Queue = require("../models/queue");
 const Message = require("../models/message");
-const User = require("../models/user");
+const queue = require("../models/queue");
 
-const getMessagesByUserID = async (req, res, next) => {
-  res.json({ message: "Shows all messages that a user has polled." });
+let DUMMY_MESSAGES = [
+  {
+    content: "Here is dummy content",
+    messageID: "1",
+    queueID: "1",
+    currentUserID: "1",
+  },
+  {
+    content: "Here is more dummy content",
+    messageID: "2",
+    queueID: "2",
+    currentUserID: "2",
+  },
+];
+
+const getMessagesByUserIDAndQueueID = async (req, res, next) => {
+  res.json(req.params);
+  const { userID, queueID } = req.params;
+  const userMessages = DUMMY_MESSAGES.filter((m) => {
+    m.currentUserID === userID && m.queueID === queueID;
+  });
+
+  res.json({
+    userID,
+    queueID,
+    messages: userMessages,
+    message: `Here are all messages from queue: ${queueID} that match the user ID: ${userID}`,
+  });
 };
 
 const getMessageByMessageID = async (req, res, next) => {
@@ -38,7 +62,7 @@ const deleteMessage = async (req, res, next) => {
 };
 
 module.exports = {
-  getMessagesByUserID,
+  getMessagesByUserIDAndQueueID,
   getMessageByMessageID,
   createMessage,
   modifyMessage,

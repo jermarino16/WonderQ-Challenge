@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 //ROUTES
 app.use("/api/users", usersRoutes); //not used for this project
 app.use("/api/queues", queueRoutes);
-app.use("/api/queues/:queueID/messages", messageRoutes);
+app.use("/api/queues/", messageRoutes);
 app.use((req, res, next) => {
   //   const error = new HttpError("Could not find this route.", 404);
   //   throw error;
