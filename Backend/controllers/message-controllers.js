@@ -2,9 +2,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const mongoose = require("mongoose");
 
-const Message = require("../models/message");
-const Queue = require("../models/queue");
-
 let DUMMY_MESSAGES = [
   {
     content: "Here is dummy content for q1 u1",

@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-const Queue = require("../models/queue");
-const { create } = require("../models/queue");
-
 let DUMMY_QUEUES = [
   { name: "queue1", queueID: "1" },
   { name: "queue2", queueID: "2" },
