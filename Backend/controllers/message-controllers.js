@@ -153,18 +153,44 @@ const modifyMessage = async (req, res, next) => {
 
 const deleteMessage = async (req, res, next) => {
   const { messageID } = req.params;
-  DUMMY_AVAILABLE_MESSAGES = DUMMY_AVAILABLE_MESSAGES.filter(
-    (m) => m.messageID !== messageID
+  let arrayTracker = 0;
+
+  let deletedMessage = DUMMY_AVAILABLE_MESSAGES.filter(
+    (m) => m.messageID === messageID
   );
+  if (!deletedMessage.length) {
+    deletedMessage = DUMMY_POLLED_MESSAGES.filter(
+      (m) => m.messageID === messageID
+    );
+    arrayTracker = 1;
+  }
+
+  if (!deletedMessage.length) {
+    res.json({
+      message: `Sorry the message with ID: ${messageID} does not exist`,
+    });
+  }
+
+  if (arrayTracker === 1) {
+    try {
+      DUMMY_POLLED_MESSAGES = await DUMMY_POLLED_MESSAGES.filter(
+        (m) => m.messageID !== messageID
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  try {
+    DUMMY_AVAILABLE_MESSAGES = await DUMMY_AVAILABLE_MESSAGES.filter(
+      (m) => m.messageID !== messageID
+    );
+  } catch (err) {
+    console.log(err);
+  }
 
   res.json({
-    messages: DUMMY_AVAILABLE_MESSAGES,
     message: `Deleted the message with ID: ${messageID}`,
-  });
-
-  res.json({
-    message:
-      "Deletes a message based on message ID. Only an admin can delete messages.",
   });
 };
 
