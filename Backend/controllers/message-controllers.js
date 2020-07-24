@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 const mongoose = require("mongoose");
 
 const Message = require("../models/message");
@@ -64,9 +66,21 @@ const getMessageByMessageID = async (req, res, next) => {
 };
 
 const createMessage = async (req, res, next) => {
+  const { content } = req.body;
+  const { queueID } = req.params;
+
+  const createdMessage = {
+    content,
+    messageID: uuidv4(),
+    queueID,
+    currentUserID: null,
+  };
+
+  DUMMY_MESSAGES.push(createdMessage);
+
   res.json({
-    message:
-      "Creates a message based on body content. Returns the message object created and wil add to available messages to the Queue with associated ID. Only admins can create messages.",
+    createdMessage,
+    message: "Created the message",
   });
 };
 
