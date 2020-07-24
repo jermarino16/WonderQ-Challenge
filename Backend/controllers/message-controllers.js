@@ -172,27 +172,21 @@ const deleteMessage = async (req, res, next) => {
   }
 
   if (arrayTracker === 1) {
-    try {
-      DUMMY_POLLED_MESSAGES = await DUMMY_POLLED_MESSAGES.filter(
-        (m) => m.messageID !== messageID
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  try {
-    DUMMY_AVAILABLE_MESSAGES = await DUMMY_AVAILABLE_MESSAGES.filter(
+    DUMMY_POLLED_MESSAGES = DUMMY_POLLED_MESSAGES.filter(
       (m) => m.messageID !== messageID
     );
-  } catch (err) {
-    console.log(err);
   }
+
+  DUMMY_AVAILABLE_MESSAGES = DUMMY_AVAILABLE_MESSAGES.filter(
+    (m) => m.messageID !== messageID
+  );
 
   res.json({
     message: `Deleted the message with ID: ${messageID}`,
   });
 };
+
+const pollMessages = async (req, res, next) => {};
 
 module.exports = {
   getMessagesByUserIDAndQueueID,
@@ -200,4 +194,5 @@ module.exports = {
   createMessage,
   modifyMessage,
   deleteMessage,
+  pollMessages,
 };
