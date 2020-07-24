@@ -53,6 +53,13 @@ let DUMMY_QUEUE = [
   },
 ];
 
+const statusOfQueue = async (req, res, next) => {
+  res.json({
+    availableMessages: DUMMY_AVAILABLE_MESSAGES.length,
+    pollMessages: DUMMY_POLLED_MESSAGES.length,
+  });
+};
+
 //needs auth to check if these messages belong  to user
 const getMessagesByUserIDAndQueueID = async (req, res, next) => {
   const { userID, queueID } = req.params;
@@ -186,9 +193,30 @@ const deleteMessage = async (req, res, next) => {
   });
 };
 
-const pollMessages = async (req, res, next) => {};
+const pollMessages = async (req, res, next) => {
+  const { userID } = req.params;
+  let count = 0;
+
+  if (!DUMMY_AVAILABLE_MESSAGES.length) {
+    res.json({
+      message: "There are no available messages to be polled",
+    });
+  }
+  DUMMY_AVAILABLE_MESSAGES.forEach((m) => {
+    m.currentUserID = userID;
+    DUMMY_POLLED_MESSAGES.push(DUMMY_AVAILABLE_MESSAGES.pop(m));
+    count++;
+  });
+
+  res.json(DUMMY_QUEUE);
+
+  res.json({
+    message: `${count} messages have been  polled`,
+  });
+};
 
 module.exports = {
+  statusOfQueue,
   getMessagesByUserIDAndQueueID,
   getMessageByMessageID,
   createMessage,

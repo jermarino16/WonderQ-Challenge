@@ -6,10 +6,12 @@ const router = express.Router();
 
 const baseURL = "/:queueID/messages";
 
+router.get(`${baseURL}/status`, messageControllers.statusOfQueue);
 router.get(
   `${baseURL}/user/:userID`,
   messageControllers.getMessagesByUserIDAndQueueID
 );
+router.get(`${baseURL}/user/:userID/poll`, messageControllers.pollMessages);
 
 // FRONT END TASK
 // router.get("/new", (req, res, next) => {
