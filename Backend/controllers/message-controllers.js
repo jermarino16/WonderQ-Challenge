@@ -56,7 +56,7 @@ let DUMMY_QUEUE = [
 const getMessagesByUserIDAndQueueID = async (req, res, next) => {
   const { userID, queueID } = req.params;
 
-  const userMessages = DUMMY_QUEUE.polledMessages.filter(
+  const userMessages = DUMMY_POLLED_MESSAGES.filter(
     (m) => m.currentUserID === userID && m.queueID === queueID
   );
   //validation checks can be done to see if the queue is valid,  or user id is valid
