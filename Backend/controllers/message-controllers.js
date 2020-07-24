@@ -45,9 +45,21 @@ const getMessagesByUserIDAndQueueID = async (req, res, next) => {
 };
 
 const getMessageByMessageID = async (req, res, next) => {
+  const { messageID } = req.params;
+
+  const fetchedMessage = DUMMY_MESSAGES.filter(
+    (m) => m.messageID === messageID
+  );
+
+  if (!fetchedMessage.length) {
+    res.json({
+      message: `Sorry there is no message with the message ID: ${messageID} `,
+    });
+  }
+
   res.json({
-    message:
-      "Display one message based on message ID. Messages can only be read have to be by users with associated user ID's.",
+    fetchedMessage,
+    message: `Here's your message with the message ID: ${messageID}`,
   });
 };
 
