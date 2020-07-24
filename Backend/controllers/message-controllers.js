@@ -2,31 +2,61 @@ const { v4: uuidv4 } = require("uuid");
 
 const mongoose = require("mongoose");
 
-let DUMMY_MESSAGES = [
+let DUMMY_AVAILABLE_MESSAGES = [
   {
-    content: "Here is dummy content for q1 u1",
+    content: "Here is available message  for q1 u1",
     messageID: "10",
     queueID: "1",
-    currentUserID: "1",
+    currentUserID: "u1",
   },
   {
-    content: "Dummy content for q1 u1",
+    content: "Available Message  for q1 u1",
     messageID: "20",
     queueID: "1",
-    currentUserID: "1",
+    currentUserID: "u1",
   },
   {
-    content: "Dummy content for q2 u2",
+    content: "Available message for q2 u2",
     messageID: "30",
     queueID: "2",
-    currentUserID: "2",
+    currentUserID: "u2",
+  },
+];
+
+let DUMMY_POLLED_MESSAGES = [
+  {
+    content: "polled message q1",
+    messageID: "40",
+    queueID: "1",
+    currentUserID: "u1",
+  },
+  {
+    content: "polled message for q1 u1",
+    messageID: "50",
+    queueID: "1",
+    currentUserID: "u1",
+  },
+  {
+    content: "polled message for q2 u2",
+    messageID: "60",
+    queueID: "2",
+    currentUserID: "u2",
+  },
+];
+
+let DUMMY_QUEUE = [
+  {
+    name: "queue1",
+    queueID: "1",
+    availableMessages: DUMMY_AVAILABLE_MESSAGES,
+    polledMessages: DUMMY_POLLED_MESSAGES,
   },
 ];
 
 const getMessagesByUserIDAndQueueID = async (req, res, next) => {
   const { userID, queueID } = req.params;
 
-  const userMessages = DUMMY_MESSAGES.filter(
+  const userMessages = DUMMY_QUEUE.polledMessages.filter(
     (m) => m.currentUserID === userID && m.queueID === queueID
   );
   //validation checks can be done to see if the queue is valid,  or user id is valid
@@ -46,7 +76,7 @@ const getMessagesByUserIDAndQueueID = async (req, res, next) => {
 const getMessageByMessageID = async (req, res, next) => {
   const { messageID } = req.params;
 
-  const fetchedMessage = DUMMY_MESSAGES.filter(
+  const fetchedMessage = DUMMY_AVAILABLE_MESSAGES.filter(
     (m) => m.messageID === messageID
   );
 
@@ -73,7 +103,7 @@ const createMessage = async (req, res, next) => {
     currentUserID: null,
   };
 
-  DUMMY_MESSAGES.push(createdMessage);
+  DUMMY_AVAILABLE_MESSAGES.push(createdMessage);
 
   res.json({
     createdMessage,
@@ -86,16 +116,16 @@ const modifyMessage = async (req, res, next) => {
   const { messageID } = req.params;
 
   const updatedMessage = {
-    ...DUMMY_MESSAGES.find((m) => m.messageID === messageID),
+    ...DUMMY_AVAILABLE_MESSAGES.find((m) => m.messageID === messageID),
   };
-  const messageIndex = DUMMY_MESSAGES.findIndex(
+  const messageIndex = DUMMY_AVAILABLE_MESSAGES.findIndex(
     (m) => m.messageID === messageID
   );
   updatedMessage.content = content;
   if (currentUserID) {
     updatedMessage.currentUserID = currentUserID;
   }
-  DUMMY_MESSAGES[messageIndex] = updatedMessage;
+  DUMMY_AVAILABLE_MESSAGES[messageIndex] = updatedMessage;
   res.json({
     updatedMessage,
     message: "Message updated",
@@ -104,10 +134,12 @@ const modifyMessage = async (req, res, next) => {
 
 const deleteMessage = async (req, res, next) => {
   const { messageID } = req.params;
-  DUMMY_MESSAGES = DUMMY_MESSAGES.filter((m) => m.messageID !== messageID);
+  DUMMY_AVAILABLE_MESSAGES = DUMMY_AVAILABLE_MESSAGES.filter(
+    (m) => m.messageID !== messageID
+  );
 
   res.json({
-    messages: DUMMY_MESSAGES,
+    messages: DUMMY_AVAILABLE_MESSAGES,
     message: `Deleted the message with ID: ${messageID}`,
   });
 
