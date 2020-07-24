@@ -8,7 +8,7 @@ let DUMMY_QUEUES = [
 ];
 
 const getQueues = async (req, res, next) => {
-  res.json({ queues: DUMMY_QUEUES, message: "Return list of all queues" });
+  res.json({ queues: DUMMY_QUEUES, message: "Here's all of the queues" });
 };
 
 const getQueueByID = async (req, res, next) => {
@@ -18,11 +18,11 @@ const getQueueByID = async (req, res, next) => {
 
   if (!queue.length) {
     res.json({
-      message: "There is no queue with that associated ID",
+      message: `There is no queue with the associated ID: ${queueID}`,
     });
   }
 
-  res.json({ queue, message: "Here's your queue" });
+  res.json({ queue, message: `Here's your queue with ID: ${queueID}` });
 };
 
 const createQueue = async (req, res, next) => {
@@ -32,7 +32,7 @@ const createQueue = async (req, res, next) => {
 
   res.json({
     createdQueue,
-    message: "Creates a new Queue and returns that Queue information",
+    message: "Created a new queue",
   });
 };
 
@@ -50,7 +50,7 @@ const modifyQueue = async (req, res, next) => {
 
   res.json({
     queue: updatedQueue,
-    message: "Your queue has been modified",
+    message: `Queue with ID: ${queueID} has been modified`,
   });
 };
 
@@ -59,7 +59,7 @@ const deleteQueue = async (req, res, next) => {
   DUMMY_QUEUES = DUMMY_QUEUES.filter((q) => q.queueID !== queueID);
   res.json({
     queues: DUMMY_QUEUES,
-    message: `Deleted the queue with id: ${queueID}`,
+    message: `Deleted the queue with ID: ${queueID}`,
   });
 };
 
