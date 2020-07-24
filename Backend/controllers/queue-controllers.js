@@ -6,7 +6,16 @@ const Message = require("../models/message");
 const User = require("../models/user");
 
 const getQueues = async (req, res, next) => {
-  res.json({ message: "Return list of all queues" });
+  const name1 = "DUMMY DATA1";
+  const name2 = "DUMMY DATA2";
+
+  const queueList = [];
+  const dummy_queue1 = new Queue({ name1 });
+  const dummy_queue2 = new Queue({ name2 });
+  queueList.push(dummy_queue1);
+  queueList.push(dummy_queue2);
+
+  res.json({ queues: queueList, message: "Return list of all queues" });
 };
 
 const getQueueByID = async (req, res, next) => {
