@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   //   const error = new HttpError("Could not find this route.", 404);
   //   throw error;
   res.json({
-    message: "Sorry no route for that",
+    message: "404 Error: Sorry no route for that",
   });
 });
 
