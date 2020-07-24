@@ -53,6 +53,7 @@ let DUMMY_QUEUE = [
   },
 ];
 
+//needs auth to check if these messages belong  to user
 const getMessagesByUserIDAndQueueID = async (req, res, next) => {
   const { userID, queueID } = req.params;
 
@@ -73,16 +74,17 @@ const getMessagesByUserIDAndQueueID = async (req, res, next) => {
   });
 };
 
+//needs auth to check if this message belongs to user
 const getMessageByMessageID = async (req, res, next) => {
   const { messageID } = req.params;
 
-  const fetchedMessage = DUMMY_AVAILABLE_MESSAGES.filter(
+  const fetchedMessage = DUMMY_POLLED_MESSAGES.filter(
     (m) => m.messageID === messageID
   );
 
   if (!fetchedMessage.length) {
     res.json({
-      message: `Sorry there is no message with the message ID: ${messageID} `,
+      message: `Sorry the message with ID: ${messageID} does not exist or is not polled to you`,
     });
   }
 
