@@ -106,6 +106,14 @@ const modifyMessage = async (req, res, next) => {
 };
 
 const deleteMessage = async (req, res, next) => {
+  const { messageID } = req.params;
+  DUMMY_MESSAGES = DUMMY_MESSAGES.filter((m) => m.messageID !== messageID);
+
+  res.json({
+    messages: DUMMY_MESSAGES,
+    message: `Deleted the message with ID: ${messageID}`,
+  });
+
   res.json({
     message:
       "Deletes a message based on message ID. Only an admin can delete messages.",
