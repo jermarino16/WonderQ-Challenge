@@ -53,8 +53,18 @@ const createQueue = async (req, res, next) => {
 };
 
 const modifyQueue = async (req, res, next) => {
+  const { name } = req.body;
+  const { queueID } = req.params;
+
+  const name1 = "DUMMY DATA1";
+
+  let dummy_queue = new Queue({ name: name1, queueID: "1" });
+
+  dummy_queue.name = name;
+
   res.json({
-    message: "Modifies a queue",
+    dummy_queue,
+    message: "Your queue has been modified",
   });
 };
 
