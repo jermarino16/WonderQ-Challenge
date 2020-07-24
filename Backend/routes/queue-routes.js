@@ -15,7 +15,7 @@ router.get("/", queuesControllers.getQueues);
 
 router.get("/:queueID", queuesControllers.getQueueByID);
 
-router.post("/:queueID", queuesControllers.createQueue);
+router.post("/", queuesControllers.createQueue);
 
 router.patch("/:queueID", queuesControllers.modifyQueue);
 
