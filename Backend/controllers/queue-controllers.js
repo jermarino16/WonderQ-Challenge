@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 let DUMMY_QUEUES = [
-  { name: "queue1", queueID: "1" },
-  { name: "queue2", queueID: "2" },
+  { name: "queue1", queueID: "1", availableMessages: [], polledMessages: [] },
+  { name: "queue2", queueID: "2", availableMessages: [], polledMessages: [] },
 ];
 
 const getQueues = async (req, res, next) => {
@@ -26,12 +27,12 @@ const getQueueByID = async (req, res, next) => {
 const createQueue = async (req, res, next) => {
   const { name } = req.body;
 
-  const createdQueue = { name, queueID: "3" }; // I can use a UUID for the queue right now but wont worry about it
+  const createdQueue = { name, queueID: uuidv4() };
   DUMMY_QUEUES.push(createdQueue);
 
   res.json({
     createdQueue,
-    message: "Created a new queue",
+    message: `Created a new queue with ID: ${createdQueue.queueID}`,
   });
 };
 
