@@ -30,7 +30,7 @@
 > This is the process that I underwent to complete the project. I hope this helps bring insight on how I like to tackle problems
 1. First, I re-read the tasks and requirements and made a complete list of what was needed. I asked the Product Owner, Shmuel, for clarification on a requirement I did not fully comprehend instead of making assumptions and delivering on a feature out of scope. In this process, I examined  Amazon's Simple Queue service to fully understand Queue functionality.
 2. Next, I created diagrams. In this phase, I created a simple system architecture design and use-case diagram. These were basic but allowed me to better visualize what will be occuring as well as what is needed.
-3. After that I created my API documentation. This is where I fully designed the implementation of the API's before coding. I prefer to create the documentation and truly draw up the API's before coding. This makes it to where changes in architecture are easier to truly implement and think about as well as allowing me to have full documentation of the system when it's deployed.
+3. After that I created my API documentation. This is where I fully designed the implementation of the API's before coding. I prefer to create the documentation and truly draw up the API's before coding. This makes it to where changes in architecture are easier to truly implement and think about as well as allowing me to have full documentation of the system when it's deployed. [Documentation Here](https://jermarino16.stoplight.io/docs/wonderq-project-doc/reference/WonderQ-Messages.yaml/paths/~1api~1queues~1%7BqueueID%7D~1messages/post). 
 4. After that I proceeded to code and mapout what was already designed. Some minor tweaks needed to change with API design as I discovered flaws and documentation was immediately updated.
 
 ### Application Models
@@ -58,7 +58,9 @@
     - I could implement features where Queue has information regarding how many polled messages a user can have, and message delivery time, etc.
    
 ###  Documentation
-> Documentation was created using Stoplight.io and has been shared with Shmuel's email. 
+> Documentation was created using Stoplight.io.
+[Documentation Here](https://jermarino16.stoplight.io/docs/wonderq-project-doc/reference/WonderQ-Messages.yaml/paths/~1api~1queues~1%7BqueueID%7D~1messages/post)
+
 
 ###  Conclusion
 > Thanks again for taking the time to consider me as a possible member of your team. I hope I was able to give you guys a decent understanding of where I am at as an engineer. I look forward to hearing feedback from you guys, no matter how constructive it may be!
