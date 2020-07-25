@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const usersRoutes = require("./routes/user-routes");
 const queueRoutes = require("./routes/queue-routes");
 const messageRoutes = require("./routes/message-routes");
-const HttpError = require("./models/http-error");
 
 const app = express();
 
