@@ -193,6 +193,7 @@ const deleteMessage = async (req, res, next) => {
   });
 };
 
+//will poll all available msgs, can add criteria to have a poll limit
 const pollMessages = async (req, res, next) => {
   const { userID } = req.params;
   let count = 0;
@@ -202,11 +203,13 @@ const pollMessages = async (req, res, next) => {
       message: "There are no available messages to be polled",
     });
   }
-  DUMMY_AVAILABLE_MESSAGES.forEach((m) => {
-    m.currentUserID = userID;
-    DUMMY_POLLED_MESSAGES.push(DUMMY_AVAILABLE_MESSAGES.pop(m));
+
+  let availMsgLength = DUMMY_AVAILABLE_MESSAGES.length;
+  for (var i = availMsgLength - 1; i >= 0; i--) {
+    DUMMY_AVAILABLE_MESSAGES[i].currentUserID = userID;
+    DUMMY_POLLED_MESSAGES.push(DUMMY_AVAILABLE_MESSAGES.pop());
     count++;
-  });
+  }
 
   res.json(DUMMY_QUEUE);
 
